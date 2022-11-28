@@ -1,5 +1,7 @@
 package com.devsuperior.user.entities;
 
+import java.time.Instant;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -23,6 +25,10 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String name;
+	private String email;
+	private String phone;
+	private Instant birthDate;
+	private Double balance;
 	private String password;
 
 }
