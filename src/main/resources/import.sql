@@ -1,6 +1,0 @@
-INSERT INTO tb_user (name, email, phone, birth_date, balance, password) VALUES ('Maria', 'maria@gmail.com', '99970-8499', TIMESTAMP WITH TIME ZONE '2017-01-10T20:50:00Z', 100.0, '12345678');
-INSERT INTO tb_user (name, email, phone, birth_date, balance, password) VALUES ('Joao', 'joao@gmail.com', '99442-9090', TIMESTAMP WITH TIME ZONE '1949-12-28T20:50:00Z', 10.0, '2564282');
-INSERT INTO tb_user (name, email, phone, birth_date, balance, password) VALUES ('Mirian', 'mimi@gmail.com', '99970-8499', TIMESTAMP WITH TIME ZONE '1949-09-30T20:50:00Z', 100.0, '12345678');
-INSERT INTO tb_user (name, email, phone, birth_date, balance, password) VALUES ('Miguel', 'javali@gmail.com', '99442-9090', TIMESTAMP WITH TIME ZONE '2006-04-11T20:50:00Z', 10.0, '2564282');
-INSERT INTO tb_user (name, email, phone, birth_date, balance, password) VALUES ('Susanne', 'susimig@gmail.com', '99970-8499', TIMESTAMP WITH TIME ZONE '1975-09-14T20:50:00Z', 100.0, '12345678');
-INSERT INTO tb_user (name, email, phone, birth_date, balance, password) VALUES ('Rodrigo', 'rod@gmail.com', '99442-9090', TIMESTAMP WITH TIME ZONE '1979-07-02T20:50:00Z', 10.0, '2564282');
