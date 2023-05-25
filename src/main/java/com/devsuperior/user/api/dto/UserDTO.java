@@ -1,7 +1,5 @@
 package com.devsuperior.user.api.dto;
 
-import java.time.Instant;
-
 import com.devsuperior.user.domain.model.User;
 
 import lombok.AllArgsConstructor;
@@ -19,15 +17,14 @@ public class UserDTO {
 	private String name;
 	private String email;	
 	private String phone;
-	private String cpf;
-	private Instant birthDate;	
+	private String docment;
+	
 	
 	public UserDTO(User user) {
 		id = user.getId();
 		name = user.getName();
 		email = user.getEmail();
 		phone = user.getPhone();
-		cpf = user.getCpf();
-		birthDate = user.getBirthDate();
+		docment = user.getDocument();
 	}
 }

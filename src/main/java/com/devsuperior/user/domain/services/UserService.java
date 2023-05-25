@@ -16,12 +16,12 @@ public class UserService {
 	@Autowired
 	private UserRepository userRepository;
 	
-	@Transactional(readOnly = true)
+	@Transactional(readOnly = false)
 	public User saving(User user){
 		return userRepository.save(user); 
 	}
 	
-	@Transactional(readOnly = true)
+	@Transactional(readOnly = false)
 	public User searchingForId(Long id) {
 		return userRepository.findById(id)
 				.orElseThrow(() -> new EntidadeNaoEncontrada("Usuario não encontado!"));		
