@@ -3,6 +3,8 @@ package com.devsuperior.user.api.controllers;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +16,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.devsuperior.user.api.dto.UserDTO;
+import com.devsuperior.user.domain.exception.DadoEmUsoException;
+import com.devsuperior.user.domain.exception.EntidadeNaoEncontrada;
 import com.devsuperior.user.domain.model.User;
 import com.devsuperior.user.domain.repositories.UserRepository;
 import com.devsuperior.user.domain.services.UserService;
@@ -41,8 +45,12 @@ public class UserController {
 		
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public UserDTO adding(@RequestBody User user) {
-		return toDTO(userService.saving(user));
+	public UserDTO adding(@RequestBody @Valid User user) {
+		try {
+		     return toDTO(userService.saving(user));
+		}catch (EntidadeNaoEncontrada e) {
+			throw new DadoEmUsoException(e.getMessage());
+		}
 	}
 	
 
