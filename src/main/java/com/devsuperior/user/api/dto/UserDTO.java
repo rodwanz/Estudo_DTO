@@ -18,13 +18,5 @@ public class UserDTO {
 	private String email;	
 	private String phone;
 	private String docment;
-	
-	
-	public UserDTO(User user) {
-		id = user.getId();
-		name = user.getName();
-		email = user.getEmail();
-		phone = user.getPhone();
-		docment = user.getDocument();
-	}
+
 }

@@ -34,8 +34,8 @@ public class UserController {
 	}
 	
 	@GetMapping("/{id}")
-	public UserDTO findById(@PathVariable Long id) {
-		User user = userService.searchingForId(id);		
+	public UserDTO search(@PathVariable Long id) {
+		User user = userService.seekAndFail(id);		
 		return toDTO(user);
 	}
 		

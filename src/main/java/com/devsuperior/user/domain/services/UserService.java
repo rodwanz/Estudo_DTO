@@ -13,6 +13,9 @@ import com.devsuperior.user.domain.repositories.UserRepository;
 @Service
 public class UserService {
 	
+	private static final String MSG_ENTIDADE_NÃO_ENCONTARDA 
+	          = "Entidade não encontarda";
+	
 	@Autowired
 	private UserRepository userRepository;
 	
@@ -22,8 +25,9 @@ public class UserService {
 	}
 	
 	@Transactional(readOnly = false)
-	public User searchingForId(Long id) {
+	public User seekAndFail(Long id) {
 		return userRepository.findById(id)
-				.orElseThrow(() -> new EntidadeNaoEncontrada("Usuario não encontado!"));		
+				.orElseThrow(() -> new EntidadeNaoEncontrada(
+						String.format(MSG_ENTIDADE_NÃO_ENCONTARDA, id)));		
 	}
 }
