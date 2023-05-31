@@ -1,7 +1,6 @@
 package com.devsuperior.user.api.controllers;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
@@ -15,7 +14,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.devsuperior.user.api.assembler.UserDTOAssembler;
+import com.devsuperior.user.api.assembler.UserImputDisassembler;
 import com.devsuperior.user.api.dto.UserDTO;
+import com.devsuperior.user.api.dto.imput.UserImput;
 import com.devsuperior.user.domain.exception.DadoEmUsoException;
 import com.devsuperior.user.domain.exception.EntidadeNaoEncontrada;
 import com.devsuperior.user.domain.model.User;
@@ -32,41 +34,31 @@ public class UserController {
 	@Autowired
 	private UserRepository userRepository;
 	
+	@Autowired
+	private UserDTOAssembler userDTOAssembler;
+	
+	@Autowired
+	private UserImputDisassembler userImputDisassembler;
+	
 	@GetMapping
 	public List<UserDTO> listing(){
-		return toCollectionDTO(userRepository.findAll()); 
+		return userDTOAssembler.toCollectionDTO(userRepository.findAll()); 
 	}
 	
 	@GetMapping("/{id}")
 	public UserDTO search(@PathVariable Long id) {
 		User user = userService.seekAndFail(id);		
-		return toDTO(user);
+		return userDTOAssembler.toDTO(user);
 	}
 		
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public UserDTO adding(@RequestBody @Valid User user) {
+	public UserDTO adding(@RequestBody @Valid UserImput userDTOImput) {
 		try {
-		     return toDTO(userService.saving(user));
+			 User user = userImputDisassembler.toDomainObject(userDTOImput);
+		     return userDTOAssembler.toDTO(userService.saving(user));
 		}catch (EntidadeNaoEncontrada e) {
 			throw new DadoEmUsoException(e.getMessage());
 		}
-	}
-	
-
-	private UserDTO toDTO(User user) {
-		UserDTO userDTO = new UserDTO();
-		userDTO.setId(user.getId());
-		userDTO.setName(user.getName());
-		userDTO.setEmail(user.getEmail());
-		userDTO.setPhone(user.getPhone());
-		userDTO.setDocment(user.getDocument());
-		return userDTO;
-	}
-	
-	private List<UserDTO> toCollectionDTO(List<User> users){
-		return users.stream()
-				.map(user -> toDTO(user))
-				.collect(Collectors.toList());
 	}
 }
