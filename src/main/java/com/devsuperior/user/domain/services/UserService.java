@@ -4,15 +4,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.devsuperior.user.domain.exception.EntidadeNaoEncontrada;
+import com.devsuperior.user.domain.exception.EntityNotFound;
 import com.devsuperior.user.domain.model.User;
 import com.devsuperior.user.domain.repositories.UserRepository;
 
 @Service
 public class UserService {
-	
-	private static final String MSG_ENTIDADE_NÃO_ENCONTARDA 
-	          = "Entidade não encontarda";
+		
+	private static final String MSG_ENTITY_NOT_FOUND = 
+			"Entity not found";
 	
 	@Autowired
 	private UserRepository userRepository;
@@ -25,7 +25,7 @@ public class UserService {
 	@Transactional(readOnly = false)
 	public User seekAndFail(Long id) {
 		return userRepository.findById(id)
-				.orElseThrow(() -> new EntidadeNaoEncontrada(
-						String.format(MSG_ENTIDADE_NÃO_ENCONTARDA, id)));		
+				.orElseThrow(() -> new EntityNotFound(
+						String.format(MSG_ENTITY_NOT_FOUND, id)));		
 	}
 }

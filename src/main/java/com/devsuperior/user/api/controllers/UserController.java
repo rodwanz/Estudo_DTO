@@ -18,8 +18,8 @@ import com.devsuperior.user.api.assembler.UserDTOAssembler;
 import com.devsuperior.user.api.assembler.UserImputDisassembler;
 import com.devsuperior.user.api.dto.UserDTO;
 import com.devsuperior.user.api.dto.imput.UserImput;
-import com.devsuperior.user.domain.exception.DadoEmUsoException;
-import com.devsuperior.user.domain.exception.EntidadeNaoEncontrada;
+import com.devsuperior.user.domain.exception.DataInUse;
+import com.devsuperior.user.domain.exception.EntityNotFound;
 import com.devsuperior.user.domain.model.User;
 import com.devsuperior.user.domain.repositories.UserRepository;
 import com.devsuperior.user.domain.services.UserService;
@@ -57,8 +57,8 @@ public class UserController {
 		try {
 			 User user = userImputDisassembler.toDomainObject(userDTOImput);
 		     return userDTOAssembler.toDTO(userService.saving(user));
-		}catch (EntidadeNaoEncontrada e) {
-			throw new DadoEmUsoException(e.getMessage());
+		}catch (EntityNotFound e) {
+			throw new DataInUse(e.getMessage());
 		}
 	}
 }
