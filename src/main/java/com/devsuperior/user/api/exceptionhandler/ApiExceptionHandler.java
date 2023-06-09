@@ -1,7 +1,5 @@
 package com.devsuperior.user.api.exceptionhandler;
 
-import java.time.LocalDateTime;
-
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,21 +16,37 @@ import com.devsuperior.user.domain.exception.UserNotFound;
 public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 
 	@ExceptionHandler(EntityNotFound.class)
-	public ResponseEntity<?> dealWithEntityNotFound(EntityNotFound ex, WebRequest request) {
+	public ResponseEntity<?> dealWithEntityNotFound(
+			EntityNotFound ex, WebRequest request) {
+		
+		HttpStatus status = HttpStatus.NOT_FOUND;
+		
+		Problem problem = Problem.builder()
+				.status(status.value())
+				.title("Entity not found")
+				.detail(ex.getMessage())
+				.build();
 
-		return handleExceptionInternal(ex, ex.getMessage(), new HttpHeaders(), HttpStatus.NOT_FOUND, request);
+		return handleExceptionInternal(ex, problem, new HttpHeaders(), 
+				status, request);
 	}
 
 	@ExceptionHandler(UserNotFound.class)
 	public ResponseEntity<?> dealWithUserNotFound(UserNotFound ex, WebRequest request) {
 
-		return handleExceptionInternal(ex, ex.getMessage(), new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
+		return handleExceptionInternal(ex, 
+				ex.getMessage(), 
+				new HttpHeaders(), 
+				HttpStatus.BAD_REQUEST, request);
 	}
 
 	@ExceptionHandler(DataInUse.class)
 	public ResponseEntity<?> dealWithDataInUse(DataInUse ex, WebRequest request) {
 
-		return handleExceptionInternal(ex, ex.getMessage(), new HttpHeaders(), HttpStatus.CONFLICT, request);
+		return handleExceptionInternal(ex, 
+				ex.getMessage(), 
+				new HttpHeaders(), 
+				HttpStatus.CONFLICT, request);
 	}
 
 	@Override
@@ -40,16 +54,15 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 			HttpStatus status, WebRequest request) {
 		if (body == null) {
 			body = Problem.builder()
-					.dateTime(LocalDateTime.now())
-					.message(status.getReasonPhrase())
+					.title(status.getReasonPhrase())
+					.status(status.value())
 					.build();
 		} else if (body instanceof String) {
 			body = Problem.builder()
-					.dateTime(LocalDateTime.now())
-					.message((String) body)
+					.title((String) body)
+					.status(status.value())
 					.build();
 		}
 		return super.handleExceptionInternal(ex, body, headers, status, request);
 	}
-
 }

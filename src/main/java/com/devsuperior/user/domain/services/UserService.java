@@ -10,9 +10,6 @@ import com.devsuperior.user.domain.repositories.UserRepository;
 
 @Service
 public class UserService {
-		
-	private static final String MSG_ENTITY_NOT_FOUND = 
-			"Entity not found";
 	
 	@Autowired
 	private UserRepository userRepository;
@@ -25,7 +22,6 @@ public class UserService {
 	@Transactional(readOnly = false)
 	public User seekAndFail(Long id) {
 		return userRepository.findById(id)
-				.orElseThrow(() -> new EntityNotFound(
-						String.format(MSG_ENTITY_NOT_FOUND, id)));		
+				.orElseThrow(() -> new EntityNotFound(id));		
 	}
 }

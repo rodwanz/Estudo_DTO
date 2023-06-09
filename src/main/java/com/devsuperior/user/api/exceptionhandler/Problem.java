@@ -1,7 +1,5 @@
 package com.devsuperior.user.api.exceptionhandler;
 
-import java.time.LocalDateTime;
-
 import lombok.Builder;
 import lombok.Getter;
 
@@ -9,7 +7,8 @@ import lombok.Getter;
 @Builder
 public class Problem {
 	
-	private LocalDateTime dateTime;
-	private String message;
+	private Integer status;
+	private String title;
+	private String detail;
 
 }
