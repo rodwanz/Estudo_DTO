@@ -9,6 +9,5 @@ public class Problem {
 	
 	private Integer status;
 	private String title;
-	private String detail;
 
 }
